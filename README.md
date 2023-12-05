@@ -1,15 +1,14 @@
 # `vim-monokai-tasty`
 
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-blueviolet.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity)
-![Last commit](https://img.shields.io/github/last-commit/patstockwell/vim-monokai-tasty?color=blue)
+# Disclaimer
 
-Monokai forever! 🎉 Inspired by Sublime Text's interpretation of monokai, this colour is both gui- and cterm-supported.
-It works for all languages, and is particularly good for JavaScript and TypeScript development ❤️
+This repo is a fork of patstockwell's "vim-monokai-tasty" colorscheme with some modification of my own use.
 
-Unlike other monokai implementations, `vim-monokai-tasty` targets named syntax groups from a variety of plugins (listed below). <sup>1</sup>_This colorscheme is 74% tastier than competitors_ 🌮
+1. Change BG color of current search result     -   from purple to white
+2. Change BG color of incremental search result -   from purple to yellow
 
-<sup>1</sup>according to me
+---
+Monokai forever! Inspired by Sublime Text's interpretation of monokai. 
 
 ![](./images/example_main.png)
 
@@ -17,22 +16,12 @@ Unlike other monokai implementations, `vim-monokai-tasty` targets named syntax g
 
 If you use _pathogen_
 ```bash
-git clone https://github.com/patstockwell/vim-monokai-tasty.git ~/.vim/bundle/vim-monokai-tasty
-```
-
-If you use _vim-plug_, add the following and run `:PlugInstall`
-```vim
-Plug 'patstockwell/vim-monokai-tasty'
+git clone https://github.com/steel911/vim-monokai-tasty.git ~/.vim/bundle/vim-monokai-tasty
 ```
 
 If you use _Vundle_, add the following and run `:PluginInstall`
 ```vim
-Plugin 'patstockwell/vim-monokai-tasty'
-```
-
-If you use _minpac_, add the following and run `:call minpac#update()`
-```vim
-call minpac#add('vim-jp/syntax-vim-ex')
+Plugin 'steel911/vim-monokai-tasty'
 ```
 
 ## 🐺 Use
@@ -70,43 +59,24 @@ To use the included [vim-airline](https://github.com/vim-airline/vim-airline) th
 let g:airline_theme='monokai_tasty'
 ```
 
-## 📚 Additional plugins with targeted syntax groups
-For JavaScript, TypeScript, and React development, _monokai-tasty_ supports definitions from all these plugins.
-Add some of these for an even better look and feel:
-```vim
-Plug 'HerringtonDarkholme/yats.vim'
-Plug 'pangloss/vim-javascript'
-Plug 'MaxMEllon/vim-jsx-pretty'
-Plug 'styled-components/vim-styled-components'
-Plug 'elzr/vim-json'
-Plug 'jparise/vim-graphql'
-```
 
-## 🔮 Extras
-
-- If you use [iterm2](https://iterm2.com/) (you should), there is an included _monokai.itermcolors_ file.
-- If you use GnuCoreutils there is a _dircolors_ file (compliments the iterm colours)
-
-## 📺 Screen shots
+##  Screen shots
 
 ![](./images/example_javascript.png)
 ![](./images/example_vim_and_markdown.png)
-![](./images/example_ruby.png)
 
-## 🌟 Example `.vimrc`
+##  Example `.vimrc`
 
 ```vim
-" put Plug declaration first
-call plug#begin('~/.vim/plugged')
-Plug 'patstockwell/vim-monokai-tasty'
-Plug 'HerringtonDarkholme/yats.vim'
-Plug 'pangloss/vim-javascript'
-Plug 'MaxMEllon/vim-jsx-pretty'
-Plug 'elzr/vim-json'
-Plug 'styled-components/vim-styled-components'
-Plug 'itchyny/lightline.vim'
-Plug 'vim-airline/vim-airline'
-call plug#end()
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'steel911/vim-monokai-tasty'
+Plugin 'pangloss/vim-javascript'
+Plugin 'elzr/vim-json'
+Plugin 'itchyny/lightline.vim'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+call vundle#end()
 
 let g:vim_monokai_tasty_italic = 1                    " allow italics, set this before the colorscheme
 let g:vim_monokai_tasty_machine_tint = 1              " use `mahcine` colour variant
@@ -116,15 +86,50 @@ colorscheme vim-monokai-tasty                         " set the colorscheme
 " Optional themes for airline/lightline
 let g:airline_theme='monokai_tasty'                   " airline theme
 let g:lightline = { 'colorscheme': 'monokai_tasty' }  " lightline theme
+let g:airline_section_z = airline#section#create(['%3p%%: ', 'linenr', ':%3v'])
+let g:airline_section_a = airline#section#create(['paste', 'mode'])
+let g:airline_symbols.paste = 'PASTE - '
+
+function! AirlineInit()
+    call airline#parts#define_raw('linenr', '%l')
+    call airline#parts#define_accent('linenr', 'bold')
+    let g:airline_section_z = airline#section#create(['%3p%%  ',
+                \ g:airline_symbols.linenr .' ', 'linenr', ':%c'])
+endfunction
+
+autocmd VimEnter * call AirlineInit()
+
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+
+" unicode symbols
+let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+let g:airline_symbols.linenr = '␊'
+let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.whitespace = 'Ξ'
+
+" airline symbols
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = ''
 
 " If you don't like a particular colour choice from `vim-monokai-tasty`, you can
 " override it here. For example, to change the colour of the search hightlight:
-hi Search guifg=#bada55 guibg=#000000 gui=bold ctermfg=green ctermbg=black cterm=bold
+hi Search ctermbg=yellow ctermfg=black guibg=yellow guifg=black
 
-" If you want to know what the name of a particular hightlight is, you can use
-" `:What`. It prints out the syntax group that the cursor is currently above.
-" https://www.reddit.com/r/vim/comments/6z4aau/how_to_stop_vim_from_autohighlighting_italics_in/
-command! What echomsg synIDattr(synID(line('.'), col('.'), 1), 'name')
 ```
 
 ## 🎨 Colour palette
@@ -138,9 +143,3 @@ command! What echomsg synIDattr(synID(line('.'), col('.'), 1), 'name')
 | Magenta          | `#FC1A70`  |![#FC1A70](https://place-hold.it/100x40/FC1A70/000000?text=+)
 | Orange           | `#FF9700`  |![#FF9700](https://place-hold.it/100x40/FF9700/000000?text=+)
 
-## 🏗 Support
-If you like `vim-monokai-tasty` or find this plugin useful, you can support me by donating bitcoin to the following address.
-
-`1AddzniWjahrTidwC1QhBkcX7RYwn2JVoq`
-
-![](qr-code.png)
