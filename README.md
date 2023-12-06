@@ -14,12 +14,12 @@ Monokai forever! Inspired by Sublime Text's interpretation of monokai.
 
 ## 🔌 Installation
 
-If you use _pathogen_
+### Manually install
 ```bash
 git clone https://github.com/steel911/vim-monokai-tasty.git ~/.vim/bundle/vim-monokai-tasty
 ```
 
-If you use _Vundle_, add the following and run `:PluginInstall`
+### If you use _Vundle_, add the following and run `:PluginInstall`
 ```vim
 Plugin 'steel911/vim-monokai-tasty'
 ```
